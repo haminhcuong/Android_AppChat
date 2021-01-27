@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.android_appchat.Fragments.ChatsFragment;
+import com.example.android_appchat.Fragments.ProfileFragment;
 import com.example.android_appchat.Fragments.UsersFragment;
 import com.example.android_appchat.Model.User;
 import com.google.android.material.tabs.TabLayout;
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
         viewPagerAdapter.addFragment(new UsersFragment(), "Users");
+        viewPagerAdapter.addFragment(new ProfileFragment(), "Profile");
 
         view_Pager.setAdapter(viewPagerAdapter);
         tab_Layout.setupWithViewPager(view_Pager);
