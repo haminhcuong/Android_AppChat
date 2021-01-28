@@ -19,7 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.android_appchat.Fragments.ChatsFragment;
-import com.example.android_appchat.Fragments.ProfileFragment;
 import com.example.android_appchat.Fragments.UsersFragment;
 import com.example.android_appchat.Model.User;
 import com.google.android.material.tabs.TabLayout;
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
+
+    User user = new User();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,10 +80,20 @@ public class MainActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("User").child(firebaseUser.getUid());
 
+        profile_Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                intent.putExtra("userID",user.getId());
+                startActivity(intent);
+                finish();
+            }
+        });
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
+                user = snapshot.getValue(User.class);
                 txt_Username.setText(user.getUsername());
 
                 if (user.getImageURL().equals("default")) {
@@ -105,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter.addFragment(new ChatsFragment(), "Chats");
         viewPagerAdapter.addFragment(new UsersFragment(), "Users");
-        viewPagerAdapter.addFragment(new ProfileFragment(), "Profile");
 
         view_Pager.setAdapter(viewPagerAdapter);
         tab_Layout.setupWithViewPager(view_Pager);

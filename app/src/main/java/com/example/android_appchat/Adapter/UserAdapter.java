@@ -40,12 +40,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = mUsers.get(position);
+        final User user = mUsers.get(position);
         holder.txt_Username.setText(user.getUsername());
         if (user.getImageURL().equals("default")) {
             holder.profile_Image.setImageResource(R.mipmap.user);
         }else {
-            Glide.with(mContext).load(user.getImageURL()).into(holder.profile_Image);
+            Glide.with(mContext).load(user.getImageURL( )).into(holder.profile_Image);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
